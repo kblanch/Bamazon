@@ -87,11 +87,12 @@ function checkStock(i, q){
         ],
         function(error, response) {
             if(parseInt(response[0].stock_qty,10) < q){
-                console.log('Not enough Stock');
+                console.log('Insufficient Quantity!');
             }
             else{
                 console.log('hello');
                 console.log(response);
+                console.log(parseInt(response[0].stock_qty,10));
                 processOrder(i,parseInt(response[0].stock_qty,10) - q);
             }
 
@@ -100,6 +101,9 @@ function checkStock(i, q){
 }
 
 function processOrder(i, nq){
+    console.log('Process Order');
+    console.log(i);
+    console.log(nq);
      var query = connection.query( 
         'UPDATE products SET ? WHERE ?',
         [
@@ -115,6 +119,7 @@ function processOrder(i, nq){
                 throw error;
             }
             else{
+                calculateOrderTotal();
                 console.log('The order has been processed.');
             }
 
@@ -123,5 +128,21 @@ function processOrder(i, nq){
 }
 
 function calculateOrderTotal(){
-    //Price * Qty
+    var query = connection.query( 
+        'SELECT  price FROM products WHERE ?',
+        [
+            {
+                item_id: id
+            }
+        ],
+        function(error, response) {
+            if(error){
+                throw error;
+            }
+            else{
+                console.log('Order Total: ' + response[0].price * qty);
+            }
+
+        }
+    ); 
 }
