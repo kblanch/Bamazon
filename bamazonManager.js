@@ -4,6 +4,17 @@ var inquirer = require("inquirer");
 //We will be working with mySql
 var mysql = require("mysql");
 
+var connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'root',
+    database: 'bamazondb'
+});
+
+connection.connect(function(error){
+});
+
 //First
 //List a Set of Menu Options (Use Inquirer)
 inquirer.prompt([
@@ -38,7 +49,20 @@ inquirer.prompt([
 //List every available item
 //Item, ID, Name, Price, Qty
 function viewProducts(){
-    console.log('View Products');
+    var query = connection.query( 
+        'SELECT  * FROM products',
+        function(error, response) {
+            if(error){
+                throw error;
+            }
+            else{
+                //console.log(response);
+                response.forEach(function(element) {
+                    console.log(element.item_id + ' | ' + element.product_name + ' | ' + element.price + ' | ' + element.stock_qty + '\n');    
+                });
+            }
+        }
+    ); 
 }
 
 
