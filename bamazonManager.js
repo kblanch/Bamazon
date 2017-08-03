@@ -69,7 +69,23 @@ function viewProducts(){
 //View Low Inventory
 //List items with inventory count lower than 5
 function viewLowInventory(){
-    console.log("View Low Inv");
+    var query = connection.query( 
+        'SELECT  * FROM products WHERE stock_qty < 5',
+        function(error, response) {
+            if(error){
+                throw error;
+            }
+            else if(response.length < 1){
+                console.log('All inventory is at or above 5');
+            }
+            else{
+                //console.log(response);
+                response.forEach(function(element) {
+                    console.log(element.item_id + ' | ' + element.product_name + ' | ' + element.price + ' | ' + element.stock_qty + '\n');    
+                });
+            }
+        }
+    );
 }
 
 //Add to Inventory
