@@ -92,9 +92,58 @@ function viewLowInventory(){
 //Display prompt let manager manager add to inv
 function addInventory(){
     console.log("Add Inventory");
+    //listProducts();
+    inquirer.prompt([
+        {
+            type: 'text',
+            name: 'id',
+            message: 'What is the id of the product you would like to adjust?'
+        },
+        {
+            type: 'text',
+            name: 'newQty',
+            message: 'What is the new stock quantity?'
+        }
+    ]).then(function(userInput){
+        var query = connection.query(
+            'UPDATE products SET ? WHERE ?',
+            [
+                {
+                    stock_qty:  userInput.newQty
+                },
+                {
+                    item_id: userInput.id
+                }
+            ],
+            function(error, response){
+                if(error){
+                    throw error;
+                }
+                else{
+                    console.log('The Stock has been updated.');
+                }
+            }
+        );
+    });
 }
 
 //Add New Product
 function addProduct(){
     console.log("Add Product");
+}
+
+
+//List Products
+function listProducts(){
+    var query = connection.query( 
+        'SELECT * FROM products',
+        function(error, response) {
+            var idList = [];
+            response.forEach(function(element) {
+                console.log(element.item_id + ' | ' + element.product_name + ' | ' + element.price + '\n');
+                idList.push(element.item_id);
+        });
+        console.log(idList);
+        }
+    );
 }
