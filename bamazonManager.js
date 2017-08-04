@@ -4,6 +4,8 @@ var inquirer = require("inquirer");
 //We will be working with mySql
 var mysql = require("mysql");
 
+var table = require("console.table");
+
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -13,6 +15,7 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function(error){
+    tableView();
 });
 
 //First
@@ -194,4 +197,25 @@ function listProducts(){
         console.log(idList);
         }
     );
+}
+
+function tableView(){
+    var query = connection.query( 
+        'SELECT * FROM products',
+        function(error, response) {
+            var idList = [];
+            response.forEach(function(element) {
+                var item = {
+                    item_id: element.item_id,
+                    product_name: element.product_name,
+                    price: element.price
+                }
+                
+                idList.push(item);
+            });
+                console.table(idList);
+        }
+    );
+    
+
 }
