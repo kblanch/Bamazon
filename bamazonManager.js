@@ -130,6 +130,54 @@ function addInventory(){
 //Add New Product
 function addProduct(){
     console.log("Add Product");
+    inquirer.prompt([
+        {
+            type: 'text',
+            name: 'product',
+            message: 'What is the name of the product?'
+        },
+        {
+            type: 'text',
+            name: 'department',
+            message: 'What is the department?'
+        },
+        {
+            type: 'text',
+            name: 'price',
+            message: 'Please, enter the price.'            
+        },
+        {
+            type: 'text',
+            name: 'qty',
+            message: 'What is the current stock quantity?'
+        }        
+    ]).then(function(userInput){
+        var query = connection.query(
+            'INSERT INTO products SET ?, ?, ?, ?',
+            [
+                {
+                    product_name: userInput.product
+                },
+                {
+                    department_name: userInput.department
+                },
+                {
+                    price: userInput.price
+                },
+                {
+                    stock_qty: userInput.qty
+                }
+
+            ],
+            function(error,response){
+                if(error){
+                    throw error;
+                }else{
+                    console.log('Product has been added');
+                }
+            }
+        )
+    });
 }
 
 
