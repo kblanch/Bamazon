@@ -1,4 +1,4 @@
 # Bamazon
 
 Bamazon Customer View
-(/images/customer_1.png)
+![Customer prompt](/images/customer_1.png)
