@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
 });
 
 connection.connect(function(error){
-    tableView();
+    // tableView();
 });
 
 //First
@@ -199,23 +199,23 @@ function listProducts(){
     );
 }
 
-function tableView(){
-    var query = connection.query( 
-        'SELECT * FROM products',
-        function(error, response) {
-            var idList = [];
-            response.forEach(function(element) {
-                var item = {
-                    item_id: element.item_id,
-                    product_name: element.product_name,
-                    price: element.price
-                }
+// function tableView(){
+//     var query = connection.query( 
+//         'SELECT * FROM products',
+//         function(error, response) {
+//             var idList = [];
+//             response.forEach(function(element) {
+//                 var item = {
+//                     item_id: element.item_id,
+//                     product_name: element.product_name,
+//                     price: element.price
+//                 }
                 
-                idList.push(item);
-            });
-                console.table(idList);
-        }
-    );
+//                 idList.push(item);
+//             });
+//                 console.table(idList);
+//         }
+//     );
     
 
-}
+// }

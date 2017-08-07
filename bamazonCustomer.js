@@ -26,7 +26,7 @@ function listProducts(){
                 console.log(element.item_id + ' | ' + element.product_name + ' | ' + element.price + '\n');
                 idList.push(element.item_id);
         });
-        console.log(idList);
+        //console.log(idList);
         promptId();
         }
     );
@@ -46,7 +46,7 @@ function promptId(){
             console.log('That is not a valid id.');
             promptId();
         }else{
-            console.log(userInput.productId);
+            //console.log(userInput.productId);
             id = parseInt(userInput.productId,10);
             promptQty();
         }
@@ -68,7 +68,7 @@ function promptQty(){
             promptQty();
         }
         else{
-            console.log(userInput.quantity);
+            //console.log(userInput.quantity);
             qty = parseInt(userInput.quantity, 10);
             checkStock(id, qty);
         }
@@ -76,8 +76,8 @@ function promptQty(){
 }
 
 function checkStock(i, q){
-    console.log(i);
-    console.log(q);
+    //console.log(i);
+    //console.log(q);
     var query = connection.query( 
         'SELECT  stock_qty FROM products WHERE ?',
         [
@@ -90,9 +90,9 @@ function checkStock(i, q){
                 console.log('Insufficient Quantity!');
             }
             else{
-                console.log('hello');
-                console.log(response);
-                console.log(parseInt(response[0].stock_qty,10));
+                //console.log('hello');
+                //console.log(response);
+                //console.log(parseInt(response[0].stock_qty,10));
                 processOrder(i,parseInt(response[0].stock_qty,10) - q);
             }
 
@@ -101,9 +101,9 @@ function checkStock(i, q){
 }
 
 function processOrder(i, nq){
-    console.log('Process Order');
-    console.log(i);
-    console.log(nq);
+    //console.log('Process Order');
+    //console.log(i);
+    //console.log(nq);
      var query = connection.query( 
         'UPDATE products SET ? WHERE ?',
         [
